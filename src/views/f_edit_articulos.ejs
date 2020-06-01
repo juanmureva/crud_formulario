@@ -1,0 +1,62 @@
+<%- include('cab_pie/cabecera'); -%>
+
+		<style>
+			/* Un poco de estilo a la tabla y al formulario 	*/
+				table, th, td {
+					border: 1px solid black;
+				}
+
+				form {
+				  /* Centrar el formulario en la página */
+				  margin: 0 auto;
+				  width: 400px;
+				  /* Esquema del formulario */
+				  padding: 1em;
+				  border: 1px solid #CCC;
+				  border-radius: 1em;
+				}
+
+				label {
+				  /* Tamaño y alineación uniforme */
+				  display: inline-block;
+				  width: 120px;
+				  text-align: right;
+				}
+
+		</style>
+<!-- Vista previa
+		<pre>
+			<%= articulo%>
+			<%= articulo.codigo %>
+		</pre>
+-->
+		<div align= 'center'>
+			<br>
+			<form action="/actualiza_articulo/<%=articulo._id%>" method="POST">
+				<label for="_id" style="margin-left:0%;">Código (_id):</label>
+			  <input type="text" name="_id" value = <%= articulo._id%> readonly><br>
+				<% c = articulo.departamento %>
+				<label for="departamento">Categoría:</label>
+				<select name="departamento">
+				  <option value="1" <%= (c == 1) ? "selected" : "" %> >Pescado Blanco</option>
+					<option value="2" <%= (c == 2) ? "selected" : "" %> >Pescado Azul</option>
+					<option value="3" <%= (c == 3) ? "selected" : "" %> >Moluscos</option>
+					<option value="4" <%= (c == 4) ? "selected" : "" %> >Cefalópodos</option>
+				  <option value="5" <%= (c == 5) ? "selected" : "" %> >Crustáceos</option>
+					<option value="6" <%= (c == 6) ? "selected" : "" %> >Congelados</option>
+					<option value="7" <%= (c == 7) ? "selected" : "" %> >Destacados</option>
+				  <option value="8" <%= (c == 8) ? "selected" : "" %> >Oferta del día</option>
+				</select><br>
+				<label for="nombre">Nombre:</label>
+				<input type="text" name="nombre" value="<%= articulo.nombre%>"><br>
+				<label for="precio">Precio:</label>
+				<input type="text" name="precio" value="<%= articulo.precio%>"><br>
+				<label for="cantidad">Cantidad:</label>
+			  <input type="text" name="cantidad" value = "<%= articulo.cantidad%>"><br><br>
+			  <input type="submit" value="Actualizar"><br>
+			 </form>
+
+		 </div>
+
+	</body>
+</html>

@@ -1,0 +1,106 @@
+<%- include('cab_pie/cabecera'); -%>
+
+		<style>
+				/* estilo a tabla y formulario */
+				table, th, td {
+					border: 1px solid black;
+				}
+
+				form {
+				  /* Centrar el formulario en la página */
+				  margin: 0 auto;
+				  width: 400px;
+				  /* Esquema del formulario */
+				  padding: 1em;
+				  border: 1px solid #CCC;
+				  border-radius: 1em;
+				}
+
+				label {
+				  /* Tamaño y alineación uniforme */
+				  display: inline-block;
+				  width: 120px;
+				  text-align: right;
+				}
+
+				a:link {
+					color: black;
+					text-decoration: none;
+				}
+
+		</style>
+
+		<div align= 'center'>
+			<br>
+			<form action="/articulos" method="POST">
+				<label for="_id" style="margin-left:0%;">Código(_id):</label>
+			  <input type="text" name="_id"><br>
+				<label for="departamento">Departamento:&nbsp;</label>
+				<select name="departamento">
+					<option value="0"></option>
+				  <option value="1">Bebidas</option>
+					<option value="2">Carnicería</option>
+					<option value="3">Chacinas y quesos</option>
+					<option value="4">Conservas</option>
+				  <option value="4">Frutería</option>
+					<option value="6">Pastelería</option>
+					<option value="7">Pescadería</option>
+				  <option value="8">Refrigerados</option>
+				</select><br>
+				<label for="nombre">Nombre:</label>
+				<input type="text" name="nombre"><br>
+				<label for="precio">Precio:</label>
+				<input type="text" name="precio"><br>
+				<label for="cantidad">Cantidad:</label>
+			  <input type="text" name="cantidad"><br><br>
+			  <input type="submit" value="Alta"><br>
+			 </form>
+
+			 <table style="width:70%">
+				 <br>
+					 <tr>
+						 <th>Código</th>
+						 <th>Dpto</th>
+						 <th>Cod. dpto</th>
+						 <th>Nombre</th>
+						 <th>Precio</th>
+						 <th>Cantidad</th>
+						 <th>Acciones</th>
+					 </tr>
+					 <% for (var i = 0; i < articulos.length; i++) { %>
+					 <tr>
+						 <td><%= articulos[i]._id %></td>
+						 <% var dep;
+						 		var c = articulos[i].departamento;
+								if (c==1) dep = "Bebidas"
+								else if (c==2) dep = "Carnicería"
+								else if (c==3) dep = "Chacinas y quesos"
+								else if (c==4) dep = "Conservas"
+								else if (c==5) dep = "Frutería"
+								else if (c==6) dep = "Pastelería"
+								else if (c==7) dep = "Pescadería"
+								else if (c==8) dep = "Refrigerados"
+								else dep = ""
+						%>
+						 <td><%= dep %></td>
+						 <td><%= articulos[i].departamento %></td>
+						 <td><%= articulos[i].nombre %></td>
+						 <td><%= articulos[i].precio %></td>
+						 <td><%= articulos[i].cantidad %></td>
+						 <td>
+							 	<a href= "/borrar_articulo/<%=articulos[i]._id %>"</a>
+							 		<button type="button" name="button">Borrar</button>
+								<a href= "/editar_articulo/<%=articulos[i]._id %>"</a>
+			 						<button type="button" name="button">Editar</button>
+						 </td>
+					 </tr>
+					 <% } %>
+					</table>
+
+
+		 </div>
+
+
+
+	</body>
+</html>
