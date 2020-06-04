@@ -1,0 +1,67 @@
+<%- include('cab_pie/cabecera'); -%>
+
+<style>
+	/* estilo a tabla y formulario */
+	table,
+	th,
+	td {
+		border: 1px solid black;
+	}
+
+	form {
+		/* Centrar el formulario en la página */
+		margin: 0 auto;
+		width: 400px;
+		/* Esquema del formulario */
+		padding: 1em;
+		border: 1px solid #CCC;
+		border-radius: 1em;
+	}
+
+	label {
+		/* Tamaño y alineación uniforme */
+		display: inline-block;
+		width: 120px;
+		text-align: right;
+	}
+
+	a:link {
+		color: black;
+		text-decoration: none;
+	}
+</style>
+
+<div align='center'>
+	<br>
+
+	<table style="width:70%">
+		<br>
+		<tr>
+			<th>identificador</th>
+			<th>Fecha</th>
+			<th>Articulos</th>
+			<th></th>
+		</tr>
+		<% for (var i = 0; i < ventas.length; i++) { %>
+		<tr>
+			<td><%=ventas[i]._id %></td>
+			<td><%=ventas[i].fecha %></td>
+			<td><%=ventas[i].articulos.length %></td>
+			<td>
+				<a href="/ventas/detalle_venta/<%=ventas[i]._id %>" </a>
+					<button type="button" name="button">Detalle</button>
+				<a href="/ventas/borrar_venta/<%=ventas[i]._id %>" </a>
+					<button type="button" name="button">Borrar</button>
+			</td>
+		</tr>
+		<% } %>
+	</table>
+
+
+</div>
+
+
+
+</body>
+
+</html>

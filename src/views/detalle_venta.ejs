@@ -1,0 +1,55 @@
+<%- include('cab_pie/cabecera'); -%>
+<style>
+		table, th, td {
+			border: 1px solid black;
+		}
+</style>
+
+<pre>
+	Ref. Ticket: <%= venta[0].refTicket %>
+	<%="Día: "+(venta[0].fecha).toLocaleDateString()+" Hora: "+(venta[0].fecha).toLocaleTimeString() %>
+
+</pre>
+
+<table style="width:50%">
+		<tr>
+			<th>Código Artículo</th>
+			<th>Nombre</th>
+			<th>Precio Unida</th>
+			<th>Cantidad</th>
+			<th>Total</th>
+		</tr>
+		<!-- Recorremos el array artculos de la venta que tratamos -->
+		<%
+			var totalTicket = 0
+			for (var i = 0; i < venta.length; i++) { %>
+		<tr>
+			<td><%= venta[i].codigo %></td>
+			<td><%= venta[i].nombre %></td>
+			<td><%= venta[i].precioUnidad %></td>
+			<td><%= venta[i].cantidad %></td>
+			<td><%= venta[i].total %></td>
+		</tr>
+
+		<%
+			totalTicket = totalTicket + venta[i].total
+		}
+		%>
+		<tr>
+			<td>-------------</td>
+			<td>-------------</td>
+			<td>-------------</td>
+			<td>-------------</td>
+			<td>-------------</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td bgcolor="#aaa8a8">Total Ticket</td>
+			<td></td>
+			<td></td>
+			<td bgcolor="#aaa8a8"><%=  totalTicket %></td>
+		</tr>
+	 </table>
+
+	</body>
+</html>

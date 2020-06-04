@@ -10,11 +10,83 @@ router.get('/nueva', async (req, res) => {
 	const ventaNueva = new Ventas()
 	await ventaNueva.save()
 	const venta = await consultaVenta(ventaNueva._id)
-	const articulos = await Articulos.find()
+
+	//sacamos solo los articulos de los que haya algo que vender
+	const articulos = await Articulos.find({"cantidad": {$gt:0}})
+
+	console.log("articulos: "+JSON.stringify(articulos));
  	res.render('f_ventas', {
 	 venta, articulos
  	}) // redirect a una ruta url con barra
 })
+
+router.get('/hello', async (req, res) => {
+	res.send("hello")
+})
+
+router.get('/borrar_venta/:id', async (req, res) => {
+	const  id  = req.params.id
+	await Ventas.deleteOne({_id: id})
+	const ventas = await Ventas.find()
+	res.render('ventas', {
+		ventas
+	})
+})
+
+
+
+router.get('/detalle_venta/:id', async (req, res) => {
+	const { id } = req.params
+	console.log("\n\n\n--------------------------------------------------\n\n\n")
+	console.log("id: "+id)
+	console.log("\n\n\n--------------------------------------------------\n\n\n")
+	const venta = await Ventas.aggregate([
+		{
+			$match: {
+				_id: mongoose.Types.ObjectId(id)
+			}
+		},
+	  {
+	    $unwind: "$articulos"  // Para formar un documento por artículo
+															// Si no hay artículos no hay documentos
+	  },
+	  {
+	    $lookup: {
+	      from: "articulos",
+	      localField: "articulos.codigo",
+	      foreignField: "_id",
+	      as: "artVenta"
+	    }
+	  },
+	  {
+	      $unwind: "$artVenta" // Para deshacer el array que ha montado
+	  },
+	  {
+	    $project: {
+	      _id: 0,
+	      refTicket: "$_id",
+	      fecha: 1,
+	      codigo: "$articulos.codigo",
+	      nombre: "$artVenta.nombre",
+	      precioUnidad: "$artVenta.precio",
+	      cantidad: "$articulos.cantidad",
+	      total: {$multiply: ["$artVenta.precio", "$articulos.cantidad"]}
+	  	}
+		}
+	])
+	console.log("venta: "+JSON.stringify(venta))
+	if(venta ===undefined || venta.length==0){
+		err="venta no efectuada"
+		res.render('errorPage', { // render a una vista, sin barra
+			err
+		})
+	}
+	res.render('detalle_venta', {
+		venta
+	})
+})
+
+
 
 router.get('/continuaVentas/:id', async (req, res) => {
 	const  { id }  = req.params
@@ -24,6 +96,8 @@ router.get('/continuaVentas/:id', async (req, res) => {
 		venta, articulos
 	})
 })
+
+
 
 router.get('/eliminarArticulo/:id/:idArt', async (req, res) => {
 	const  id  = req.params.id

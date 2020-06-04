@@ -8,7 +8,7 @@ const app = express()
 
 // conectar a la BD
 const atlasURL =
-'mongodb+srv://user:******@cluster0-*******mongodb.net/test?retryWrites=true&w=majority'
+'mongodb+srv://admin:Sevilla2020@cluster0-*******mongodb.net/test?retryWrites=true&w=majority'
 const localURL =
 'mongodb://localhost:27017/test'
 mongoose.connect(localURL,
