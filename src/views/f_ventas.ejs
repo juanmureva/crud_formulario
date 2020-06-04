@@ -53,11 +53,11 @@
 						<select name="articulo">
 							<option value="0"></option>
 							<% for (var i = 0; i < articulos.length; i++) { %>
-							<option value="<%= articulos[i]._id %>"><%= articulos[i].nombre %></option>
+							<option value="<%= articulos[i]._id %>"><%= articulos[i].nombre %> (<%= articulos[i].cantidad %>)</option>
 							<% } %>
 						</select><br>
 					<label for="cantidad">Cantidad:</label>
-					<input type="text" name="cantidad"><br>
+					<input type="Number" name="cantidad" min="1" max="9999"><br>
 				  <input type="submit" value="Alta Artículo"><br>
 				</form>
 			</div>
@@ -71,6 +71,7 @@
 				 <br>
 					 <tr>
 						 <th>Código Artículo</th>
+						 <th>Nombre</th>
 						 <th>Cantidad</th>
 						 <th>Acciones</th>
 					 </tr>
@@ -78,6 +79,7 @@
 					 <% for (var i = 0; i < venta.articulos.length; i++) { %>
 					 <tr>
 						 <td><%= venta.articulos[i].codigo %></td>
+						 <td><%= venta.articulos[i].nombre %></td>
 						 <td><%= venta.articulos[i].cantidad %></td>
 						 <td>
 								<a href= "/ventas/eliminarArticulo/<%= venta.refTicket%>/<%= venta.articulos[i]._id %>/"</a>
